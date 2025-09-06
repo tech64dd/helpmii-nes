@@ -27,7 +27,7 @@ int drawbox(int x, int y) {
         cprintf("\n");
         ytemp = ytemp -1;
     }
-    cprintf("\r");
+    gotox(wherex() - x);
     cprintf("%c", 0x11);
     while (xtemp > 0) {
         cprintf("%c", 0x0B);
@@ -39,13 +39,22 @@ int drawbox(int x, int y) {
 }
 
 int main() {
-    (void) textcolor (COLOR_WHITE);
-    (void) bordercolor (COLOR_BLACK);
-    (void) bgcolor (COLOR_BLACK);
-
+    int screenx;
+    int screeny;
+    int screenxtemp;
+    screensize(&screenx, &screeny);
+    screenxtemp = screenx;
     clrscr();
+    bgcolor(COLOR_BLUE);
+    cprintf("help ii         m\n\r");
+    while (screenxtemp > 0) {
+        cprintf("%c", 0x0B);
+        screenxtemp = screenxtemp - 1;
+    }
+    gotoy(4);
     drawbox(20, 10);
-    gotoxy(0, 2);
+    gotoxy(17, 10);
+    drawbox(5, 5);
 
     joy_install(joy_static_stddrv);
     while(!joy_read(JOY_1));
